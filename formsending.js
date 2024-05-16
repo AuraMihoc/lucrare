@@ -18,8 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     // Trimitem datele din formular catre server
-    fetch("https://lucrare.onrender.com/sendEmail", {
-      // fetch("127.0.0.1:5500/sendEmail", {
+    // fetch("https://lucrare.onrender.com/sendEmail", {
+    fetch("https://server-lucrare.onrender.com/sendEmail", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

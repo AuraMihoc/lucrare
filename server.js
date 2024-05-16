@@ -47,9 +47,9 @@ app.post("/sendEmail", (req, res) => {
   };
 
   // Crearea unui transporter folosind credentialele Mailtrap
-  var transport = nodemailer.createTransport({
-    host: "sandbox.smtp.mailtrap.io",
-    port: 2525,
+  var transporter = nodemailer.createTransport({
+    host: "live.smtp.mailtrap.io",
+    port: 587,
     auth: {
       user: "api",
       pass: "5631ec043642161f4f9acf5f663b3624",
