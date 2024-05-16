@@ -1,0 +1,214 @@
+body {
+  background-color: #ebebeb;
+}
+
+h2 {
+  font-family: "Cormorant", serif;
+  font-size: 5vh;
+}
+
+.gold-text {
+  color: #8d734b;
+}
+
+.dark-brown {
+  background-color: #140d07;
+}
+
+.logo {
+  border-radius: 50%;
+  margin: 0px;
+  padding: 0%;
+}
+
+.piombino-image {
+  filter: brightness(80%);
+  background: url("/App files/img/home/background/piombino.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+.casa1-image {
+  filter: brightness(80%);
+  background: url("/App files/img/casa1/background/dorm.webp");
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+.casa2-image {
+  filter: brightness(80%);
+  background: url("/App files/img/casa2/background/background.jpg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+.activities-image {
+  filter: brightness(80%);
+  background: url("/App files/img/activities/background/cocktails.webp");
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+.map {
+  height: 280px;
+}
+
+.map-big {
+  height: 400px;
+}
+
+#map {
+  filter: grayscale(70%);
+}
+
+.card-left {
+  display: flex;
+  justify-content: left;
+}
+
+.card-right {
+  display: flex;
+  justify-content: right;
+}
+
+.shadow {
+  filter: drop-shadow(20px 20px 30px darkgrey);
+}
+
+.slide-from-left {
+  position: relative;
+  filter: blur(10px);
+  left: -100%; /* incepem in afara ecranului la stanga */
+  animation: slideInFromLeft 2s ease forwards; /* animatia folosita */
+}
+
+/* definim animatia */
+@keyframes slideInFromLeft {
+  to {
+    filter: blur(0);
+    left: 0; /* miscare spre centrul ecranului */
+  }
+}
+.slide-from-right {
+  position: relative;
+  filter: blur(5px);
+  left: 100%; /* incepem in afara ecranului la dreapta */
+  animation: slideInFromRight 2s ease forwards; /* animatia folosita */
+}
+
+/* definim animatia */
+@keyframes slideInFromRight {
+  to {
+    filter: blur(0);
+    left: 0; /* miscare spre centrul ecranului  */
+  }
+}
+
+.hidden {
+  opacity: 0;
+  transition: all 2s;
+}
+
+.show {
+  opacity: 1;
+}
+
+/* elementul fix din stanga */
+@media (max-width: 991px) {
+  .sticky-left {
+    z-index: -5;
+    opacity: 0;
+    position: absolute;
+  }
+  .vanish {
+    display: none;
+  }
+}
+
+.vertical {
+  display: flex;
+  transform-origin: 50%;
+  transform: rotate(180deg);
+  writing-mode: vertical-lr;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* elementul fix din stanga */
+@media (min-width: 992px) {
+  .sticky-left {
+    position: fixed;
+    top: 40%;
+    left: 0;
+    width: 80px;
+    height: 48vh;
+    background-color: #8d734b;
+    padding: 10px;
+    z-index: 10;
+  }
+}
+
+@media (max-height: 999px) {
+  .sticky-left {
+    display: none; /* ascundem elementul daca nu avem inaltime de minim 999 px */
+  }
+}
+
+.contact-info {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  color: white;
+}
+
+.contact-item {
+  text-align: left;
+}
+
+.contact-item span {
+  display: block;
+}
+
+.contact-item a {
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.gold,
+.gold:active,
+.gold:visited,
+.gold:focus {
+  background-color: #8d734b;
+  border-color: #8d734b;
+  color: white;
+}
+.gold:hover {
+  color: black;
+  background-color: #8d734b;
+  border-color: #8d734b;
+}
+
+.gold2,
+.gold2:active,
+.gold2:visited,
+.gold2:focus {
+  background-color: #140d07;
+  border-color: #8d734b;
+  color: white;
+}
+.gold2:hover {
+  color: #140d07;
+  background-color: #8d734b;
+  border-color: #8d734b;
+}
+
+.amenities-icon {
+  width: 42px;
+  height: 42px;
+  margin-right: 42pt;
+}

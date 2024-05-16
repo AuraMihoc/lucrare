@@ -1,0 +1,9 @@
+node_modules
+.tmp.drivedownload
+.tmp.driveupload
+.vscode
+Book1.csv
+Book2.csv
+supabase.js
+h --help
+emailTest.js
