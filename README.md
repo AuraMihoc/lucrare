@@ -1,5 +1,5 @@
 A small project for a friend that has apartments that can be rented on the seaside in Italy
-https://aquadro.netlify.app/
+https://lucrare-aquadro.netlify.app/
 HTML CSS Bootstrap JavaScript
 The project is not complete !!!
 It is hosted on netlify and it is connected to github so that any changes that are committed from my local repository to github are also visible on the website.
