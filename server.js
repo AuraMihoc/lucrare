@@ -6,7 +6,7 @@ const nodemailer = require("nodemailer");
 const cors = require("cors");
 
 const app = express();
-const port = 3000;
+const port = 5500;
 
 app.use(cors());
 
@@ -30,8 +30,8 @@ app.post("/sendEmail", (req, res) => {
 
   // compunem mesajul
   const mailOptions = {
-    from: "mihai.murg@demomailtrap.com", // Adresa de unde sosesc mesajele
-    to: "myshu_m@yahoo.com", // Adresa unde sunt trimise mesajele
+    from: "aurelia.mihoc@demomailtrap.com", // Adresa de unde sosesc mesajele
+    to: "mihoc.aura@gmail.com", // Adresa unde sunt trimise mesajele
     subject: "Test Email",
     html: `
             <p><strong>Last Name:</strong> ${lastname}</p>
@@ -47,12 +47,12 @@ app.post("/sendEmail", (req, res) => {
   };
 
   // Crearea unui transporter folosind credentialele Mailtrap
-  var transporter = nodemailer.createTransport({
-    host: "live.smtp.mailtrap.io",
-    port: 587,
+  var transport = nodemailer.createTransport({
+    host: "sandbox.smtp.mailtrap.io",
+    port: 2525,
     auth: {
       user: "api",
-      pass: "7c017f52561cc586a2cc170080492ec1",
+      pass: "5631ec043642161f4f9acf5f663b3624",
     },
   });
 

@@ -18,7 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     // Trimitem datele din formular catre server
-    fetch("https://server-2gcr.onrender.com/sendEmail", {
+    //fetch("https://server-2gcr.onrender.com/sendEmail", {
+    fetch("127.0.0.1:5500", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
