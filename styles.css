@@ -254,3 +254,14 @@ h4 {
   display: flex;
   justify-content: center;
 }
+
+@media (max-width: 768px) {
+  .controls {
+    margin-bottom: 10px; /* Adjust margin for smaller screens */
+  }
+
+  .calendar {
+    overflow-x: auto; /* Enable horizontal scrolling if needed */
+    max-width: 100%; /* Ensure calendar fits within the container */
+  }
+}
