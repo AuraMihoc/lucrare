@@ -7,6 +7,10 @@ h2 {
   font-size: 5vh;
 }
 
+h4 {
+  color: red;
+}
+
 .gold-text {
   color: #8d734b;
 }
@@ -53,6 +57,13 @@ h2 {
   color: white;
 }
 
+.calendar-image {
+  filter: brightness(80%);
+  background: url("/App files/img/calendar/background/calendar.jpeg");
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
 .map {
   height: 280px;
 }
@@ -211,4 +222,35 @@ h2 {
   width: 42px;
   height: 42px;
   margin-right: 42pt;
+}
+/* stiluri pentru calendar */
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.day {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.day.free {
+  background-color: #f4d5a6;
+}
+
+.day.not-free {
+  background-color: #604f36;
+  color: white;
+}
+
+.day.no-data {
+  background-color: #f8f9fa;
+  color: #aaa;
+}
+
+.day .row {
+  display: flex;
+  justify-content: center;
 }
