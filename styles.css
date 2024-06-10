@@ -227,27 +227,31 @@ h5 {
 .calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
+  gap: 3px;
 }
 
 .day {
   border: 1px solid #ccc;
   padding: 10px;
   text-align: center;
+  border-radius: 5px;
 }
 
 .day.free {
   background-color: #f4d5a6;
+  border-radius: 5px;
 }
 
 .day.not-free {
   background-color: #604f36;
   color: white;
+  border-radius: 5px;
 }
 
 .day.no-data {
   background-color: #f8f9fa;
   color: #aaa;
+  border-radius: 5px;
 }
 
 .day .row {
