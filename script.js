@@ -80,6 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const calendar = document.querySelector(".calendar");
   const yearSelect = document.getElementById("year");
   const monthSelect = document.getElementById("month");
+  const apartmentSelect = document.getElementById("apartment");
 
   const monthNames = [
     "january",
@@ -99,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
   async function getData() {
     try {
       const res = await fetch(
-        "https://naymuvktteoymrucjwrp.supabase.co/rest/v1/ocupation",
+        "https://naymuvktteoymrucjwrp.supabase.co/rest/v1/apartament",
         {
           headers: {
             apikey:
@@ -165,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  async function renderCalendar(year, month) {
+  async function renderCalendar(year, month, apartment) {
     calendar.innerHTML = "";
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
@@ -220,7 +221,8 @@ document.addEventListener("DOMContentLoaded", function () {
           (item) =>
             item.year == year &&
             item.month.toLowerCase() === monthName.toLowerCase() &&
-            item.date == i
+            item.date == i &&
+            item.apartment == apartment
         );
 
         if (entry) {
@@ -257,7 +259,7 @@ document.addEventListener("DOMContentLoaded", function () {
     yearSelect.value = currentYear.toString();
     await renderMonthOptions(currentYear);
     monthSelect.value = currentMonth.toString();
-    renderCalendar(currentYear, currentMonth);
+    renderCalendar(currentYear, currentMonth, apartmentSelect.value);
   }
 
   initializeCalendar();
@@ -266,13 +268,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const selectedYear = parseInt(this.value);
     await renderMonthOptions(selectedYear);
     const selectedMonth = parseInt(monthSelect.value);
-    renderCalendar(selectedYear, selectedMonth);
+    renderCalendar(selectedYear, selectedMonth, apartmentSelect.value);
   });
 
   monthSelect.addEventListener("change", function () {
     const selectedYear = parseInt(yearSelect.value);
     const selectedMonth = parseInt(this.value);
-    renderCalendar(selectedYear, selectedMonth);
+    renderCalendar(selectedYear, selectedMonth, apartmentSelect.value);
+  });
+
+  apartmentSelect.addEventListener("change", function () {
+    const selectedYear = parseInt(yearSelect.value);
+    const selectedMonth = parseInt(monthSelect.value);
+    renderCalendar(selectedYear, selectedMonth, apartmentSelect.value);
   });
 });
+
 //pana aici e codul pentru calendar
