@@ -1,69 +1,77 @@
+/* Definirea variabilelor CSS pentru a asigura consistența */
+:root {
+  --main-bg-color: #ebebeb;
+  --main-font-family: "Cormorant", serif;
+  --main-font-size: 5vh;
+  --main-color-red: red;
+  --main-color-gold: #8d734b;
+  --main-color-dark-brown: #140d07;
+  --main-box-shadow: 20px 20px 30px darkgrey;
+}
+
+/* Stiluri de bază pentru elementele globale */
 body {
-  background-color: #ebebeb;
+  background-color: var(--main-bg-color);
 }
 
 h2 {
-  font-family: "Cormorant", serif;
-  font-size: 5vh;
+  font-family: var(--main-font-family);
+  font-size: var(--main-font-size);
 }
 
 h5 {
-  color: red;
+  color: var(--main-color-red);
 }
 
+/* Stiluri pentru textul auriu */
 .gold-text {
-  color: #8d734b;
+  color: var(--main-color-gold);
 }
 
+/* Stiluri pentru fundal maro închis */
 .dark-brown {
-  background-color: #140d07;
+  background-color: var(--main-color-dark-brown);
 }
 
+/* Stiluri pentru logo */
 .logo {
   border-radius: 50%;
-  margin: 0px;
-  padding: 0%;
+  margin: 0;
+  padding: 0;
 }
 
+/* Stiluri pentru imagini de fundal */
 .piombino-image {
-  filter: brightness(80%);
   background: url("../assets/img/home/background/piombino.jpg");
-  background-size: cover;
-  background-position: center;
-  color: white;
 }
 
 .casa1-image {
-  filter: brightness(80%);
   background: url("../assets/img/casa1/background/dorm.webp");
-  background-size: cover;
-  background-position: center;
-  color: white;
 }
 
 .casa2-image {
-  filter: brightness(80%);
   background: url("../assets/img/casa2/background/background.jpg");
-  background-size: cover;
-  background-position: center;
-  color: white;
 }
 
 .activities-image {
-  filter: brightness(80%);
   background: url("../assets/img/activities/background/cocktails.webp");
+}
+
+.calendar-image {
+  background: url("../assets/img/calendar/background/calendar.jpeg");
+}
+.piombino-image,
+.casa1-image,
+.casa2-image,
+.activities-image,
+.calendar-image {
+  filter: brightness(80%);
   background-size: cover;
   background-position: center;
   color: white;
 }
 
-.calendar-image {
-  filter: brightness(80%);
-  background: url("../assets/img/calendar/background/calendar.jpeg");
-  background-size: cover;
-  background-position: center;
-  color: white;
-}
+/* Stiluri pentru hartă */
 .map {
   height: 280px;
 }
@@ -76,6 +84,7 @@ h5 {
   filter: grayscale(70%);
 }
 
+/* Aliniere pentru carduri */
 .card-left {
   display: flex;
   justify-content: left;
@@ -86,32 +95,19 @@ h5 {
   justify-content: right;
 }
 
+/* Efect de umbră */
 .shadow {
-  filter: drop-shadow(20px 20px 30px darkgrey);
+  filter: drop-shadow(var(--main-box-shadow));
 }
 
-.slide-from-left {
-  position: relative;
-  filter: blur(10px);
-  left: -100%; /* incepem in afara ecranului la stanga */
-  animation: slideInFromLeft 2s ease forwards; /* animatia folosita */
-}
-
-/* definim animatia */
+/* Definirea animațiilor */
 @keyframes slideInFromLeft {
   to {
     filter: blur(0);
     left: 0; /* miscare spre centrul ecranului */
   }
 }
-.slide-from-right {
-  position: relative;
-  filter: blur(5px);
-  left: 100%; /* incepem in afara ecranului la dreapta */
-  animation: slideInFromRight 2s ease forwards; /* animatia folosita */
-}
 
-/* definim animatia */
 @keyframes slideInFromRight {
   to {
     filter: blur(0);
@@ -119,6 +115,22 @@ h5 {
   }
 }
 
+/* Aplicarea animațiilor */
+.slide-from-left {
+  position: relative;
+  filter: blur(10px);
+  left: -100%; /* incepem in afara ecranului la stanga */
+  animation: slideInFromLeft 2s ease forwards; /* animatia folosita */
+}
+
+.slide-from-right {
+  position: relative;
+  filter: blur(5px);
+  left: 100%; /* incepem in afara ecranului la dreapta */
+  animation: slideInFromRight 2s ease forwards; /* animatia folosita */
+}
+
+/* Stiluri pentru ascunderea și afișarea elementelor */
 .hidden {
   opacity: 0;
   transition: all 2s;
@@ -128,7 +140,7 @@ h5 {
   opacity: 1;
 }
 
-/* elementul fix din stanga */
+/* Element fix din stanga */
 @media (max-width: 991px) {
   .sticky-left {
     z-index: -5;
@@ -149,7 +161,7 @@ h5 {
   box-sizing: border-box;
 }
 
-/* elementul fix din stanga */
+/* Element fix din stanga pentru ecrane mari */
 @media (min-width: 992px) {
   .sticky-left {
     position: fixed;
@@ -157,18 +169,20 @@ h5 {
     left: 0;
     width: 80px;
     height: 48vh;
-    background-color: #8d734b;
+    background-color: var(--main-color-gold);
     padding: 10px;
     z-index: 10;
   }
 }
 
+/* Ascundem elementul dacă înălțimea este prea mică */
 @media (max-height: 999px) {
   .sticky-left {
     display: none; /* ascundem elementul daca nu avem inaltime de minim 999 px */
   }
 }
 
+/* Stiluri pentru informațiile de contact */
 .contact-info {
   display: flex;
   justify-content: center;
@@ -190,40 +204,42 @@ h5 {
   font-size: 20px;
 }
 
+/* Stiluri pentru butoane */
 .gold,
 .gold:active,
 .gold:visited,
 .gold:focus {
-  background-color: #8d734b;
-  border-color: #8d734b;
+  background-color: var(--main-color-gold);
+  border-color: var(--main-color-gold);
   color: white;
 }
+
 .gold:hover {
   color: black;
-  background-color: #8d734b;
-  border-color: #8d734b;
 }
 
 .gold2,
 .gold2:active,
 .gold2:visited,
 .gold2:focus {
-  background-color: #140d07;
-  border-color: #8d734b;
+  background-color: var(--main-color-dark-brown);
+  border-color: var(--main-color-gold);
   color: white;
 }
+
 .gold2:hover {
-  color: #140d07;
-  background-color: #8d734b;
-  border-color: #8d734b;
+  color: var(--main-color-dark-brown);
+  background-color: var(--main-color-gold);
 }
 
+/* Iconițe pentru facilități */
 .amenities-icon {
   width: 42px;
   height: 42px;
   margin-right: 42pt;
 }
-/* stiluri pentru calendar */
+
+/* Stiluri pentru calendar */
 .calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -239,19 +255,16 @@ h5 {
 
 .day.free {
   background-color: #f4d5a6;
-  border-radius: 5px;
 }
 
 .day.not-free {
   background-color: #604f36;
   color: white;
-  border-radius: 5px;
 }
 
 .day.no-data {
   background-color: #f8f9fa;
   color: #aaa;
-  border-radius: 5px;
 }
 
 .day .row {
@@ -259,6 +272,7 @@ h5 {
   justify-content: center;
 }
 
+/* Stiluri responsive pentru calendar */
 @media (max-width: 768px) {
   .calendar {
     overflow-x: auto; /* permitem scrol daca este necesar */
