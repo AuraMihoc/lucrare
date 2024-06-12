@@ -27,7 +27,7 @@ h5 {
 
 .piombino-image {
   filter: brightness(80%);
-  background: url("/App files/img/home/background/piombino.jpg");
+  background: url("../assets/img/home/background/piombino.jpg");
   background-size: cover;
   background-position: center;
   color: white;
@@ -35,7 +35,7 @@ h5 {
 
 .casa1-image {
   filter: brightness(80%);
-  background: url("/App files/img/casa1/background/dorm.webp");
+  background: url("../assets/img/casa1/background/dorm.webp");
   background-size: cover;
   background-position: center;
   color: white;
@@ -43,7 +43,7 @@ h5 {
 
 .casa2-image {
   filter: brightness(80%);
-  background: url("/App files/img/casa2/background/background.jpg");
+  background: url("../assets/img/casa2/background/background.jpg");
   background-size: cover;
   background-position: center;
   color: white;
@@ -51,7 +51,7 @@ h5 {
 
 .activities-image {
   filter: brightness(80%);
-  background: url("/App files/img/activities/background/cocktails.webp");
+  background: url("../assets/img/activities/background/cocktails.webp");
   background-size: cover;
   background-position: center;
   color: white;
@@ -59,7 +59,7 @@ h5 {
 
 .calendar-image {
   filter: brightness(80%);
-  background: url("/App files/img/calendar/background/calendar.jpeg");
+  background: url("../assets/img/calendar/background/calendar.jpeg");
   background-size: cover;
   background-position: center;
   color: white;
@@ -260,12 +260,8 @@ h5 {
 }
 
 @media (max-width: 768px) {
-  .controls {
-    margin-bottom: 10px; /* Adjust margin for smaller screens */
-  }
-
   .calendar {
-    overflow-x: auto; /* Enable horizontal scrolling if needed */
-    max-width: 100%; /* Ensure calendar fits within the container */
+    overflow-x: auto; /* permitem scrol daca este necesar */
+    max-width: 100%; /* calendarul incape in container */
   }
 }

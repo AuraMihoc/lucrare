@@ -1,7 +1,6 @@
 `use strict`;
 
 window.addEventListener("load", (event) => {
-  console.log(event.target.title);
   if (event.target.title === "Activities in Piombino") {
     const map = L.map("map").setView([42.99739, 10.59686], 11);
 
@@ -51,7 +50,6 @@ window.addEventListener("load", (event) => {
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
-      // console.log(entry);
       if (entry.isIntersecting && entry.target.classList.contains("right")) {
         entry.target.classList.add("show");
         entry.target.classList.add("slide-from-right");
@@ -116,7 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       const data = await res.json();
-      console.log("Fetched Data:", data); // Debug: log fetched data
       return data.map((item) => ({
         ...item,
         free: item.free === true,

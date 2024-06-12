@@ -1,3 +1,4 @@
+`use strict`;
 document.addEventListener("DOMContentLoaded", function () {
   const reservationForm = document.getElementById("reservationForm");
 
