@@ -1,21 +1,22 @@
-`use strict`;
+"use strict"; // Acest lucru asigură că codul este interpretat în mod strict și aplică reguli suplimentare pentru a evita erorile comune
 
+// Importăm modulele necesare
 const express = require("express");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
 
-const app = express();
-const port = 5500;
+const app = express(); // Inițializăm o aplicație Express
+const port = 5500; // Portul pe care va asculta serverul
 
-app.use(cors());
+app.use(cors()); // Middleware pentru gestionarea cererilor CORS
 
-// Middleware pentru fisierele JSON
+// Middleware pentru gestionarea datelor JSON
 app.use(bodyParser.json());
 
-// Endpoint pentru gestionarea trimiterea formulrului
+// Endpoint pentru gestionarea trimiterea formularului
 app.post("/sendEmail", (req, res) => {
-  // Extragerea datelor din request
+  // Extragerea datelor din cererea primită
   const {
     lastname,
     name,
@@ -28,11 +29,11 @@ app.post("/sendEmail", (req, res) => {
     message,
   } = req.body;
 
-  // compunem mesajul
+  // Compunerea mesajului de e-mail
   const mailOptions = {
-    from: "aurelia.mihoc@demomailtrap.com", // Adresa de unde sosesc mesajele
-    to: "mihoc.aura@gmail.com", // Adresa unde sunt trimise mesajele
-    subject: "Test Email",
+    from: "aurelia.mihoc@demomailtrap.com", // Adresa de la care se trimite e-mailul
+    to: "mihoc.aura@gmail.com", // Adresa la care se trimite e-mailul
+    subject: "Test Email", // Subiectul e-mailului
     html: `
             <p><strong>Last Name:</strong> ${lastname}</p>
             <p><strong>Name:</strong> ${name}</p>
@@ -46,8 +47,8 @@ app.post("/sendEmail", (req, res) => {
         `,
   };
 
-  // Crearea unui transporter folosind credentialele Mailtrap
-  var transporter = nodemailer.createTransport({
+  // Crearea unui transporter pentru trimiterea e-mailului folosind nodemailer
+  const transporter = nodemailer.createTransport({
     host: "live.smtp.mailtrap.io",
     port: 587,
     auth: {
@@ -56,19 +57,19 @@ app.post("/sendEmail", (req, res) => {
     },
   });
 
-  // Trimitearea mesajului
+  // Trimiterea mesajului de e-mail
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.error("Error:", error);
-      res.status(500).send("Internal Server Error");
+      console.error("Error:", error); // Afișăm eroarea în consolă
+      res.status(500).send("Internal Server Error"); // Răspundem cu o eroare HTTP 500
     } else {
-      console.log("Email sent:", info.response);
-      res.status(200).send("Email sent successfully");
+      console.log("Email sent:", info.response); // Afișăm mesajul trimis în consolă
+      res.status(200).send("Email sent successfully"); // Răspundem cu un mesaj de succes HTTP 200
     }
   });
 });
 
-// Start server
+// Pornirea serverului și ascultarea pe portul specificat
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });

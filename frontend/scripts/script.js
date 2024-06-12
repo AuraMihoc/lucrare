@@ -1,79 +1,90 @@
-`use strict`;
+"use strict";
 
+// Adăugăm un event listener pentru a inițializa harta la încărcarea paginii
 window.addEventListener("load", (event) => {
+  // Funcție pentru inițializarea hărții
+  const initMap = (coordinates, zoomLevel) => {
+    const map = L.map("map").setView(coordinates, zoomLevel);
+
+    // Adăugăm un strat de hărți de la OpenStreetMap
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    return map;
+  };
+
+  // Funcție pentru a adăuga marcatori pe hartă
+  const addMarker = (map, coordinates, popupText) => {
+    L.marker(coordinates).addTo(map).bindPopup(popupText);
+  };
+
+  // Inițializăm harta și adăugăm marcatori pe baza titlului paginii
   if (event.target.title === "Activities in Piombino") {
-    const map = L.map("map").setView([42.99739, 10.59686], 11);
+    const map = initMap([42.99739, 10.59686], 11);
 
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
+    // Lista de marcatori cu coordonate și text pentru popup
+    const markers = [
+      {
+        coordinates: [42.92423696772851, 10.531890377151653],
+        text: "Here we have Aquadro",
+      },
+      { coordinates: [42.93295, 10.50892], text: "Salivoli beach" },
+      { coordinates: [42.9226, 10.52708], text: "DaLuca Ristorante" },
+      { coordinates: [42.98791, 10.50954], text: "I Tretruschi Srl" },
+      { coordinates: [42.92514, 10.52924], text: "Pizzeria Da Egidio" },
+      { coordinates: [42.93521, 10.49916], text: "Calamoresca" },
+      { coordinates: [42.99424, 10.53478], text: "Tenuta Poggio Rosso" },
+      { coordinates: [43.03284, 10.71007], text: "Società Agricola Petra" },
+    ];
 
-    L.marker([42.92423696772851, 10.531890377151653])
-      .addTo(map)
-      .bindPopup("Here we have Aquadro")
-      .openPopup();
-
-    L.marker([42.93295, 10.50892]).addTo(map).bindPopup("Salivoli beach");
-
-    L.marker([42.9226, 10.52708]).addTo(map).bindPopup("DaLuca Ristorante");
-
-    L.marker([42.98791, 10.50954]).addTo(map).bindPopup("I Tretruschi Srl");
-
-    L.marker([42.92514, 10.52924]).addTo(map).bindPopup("Pizzeria Da Egidio");
-
-    L.marker([42.93521, 10.49916]).addTo(map).bindPopup("Calamoresca");
-
-    L.marker([42.99424, 10.53478]).addTo(map).bindPopup("Tenuta Poggio Rosso");
-
-    L.marker([43.03284, 10.71007])
-      .addTo(map)
-      .bindPopup("Società Agricola Petra");
-  } else {
-    const map = L.map("map").setView(
-      [42.92423696772851, 10.531890377151653],
-      15
+    // Adăugăm fiecare marker pe hartă
+    markers.forEach((marker) =>
+      addMarker(map, marker.coordinates, marker.text)
     );
-
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
-
-    L.marker([42.92423696772851, 10.531890377151653])
-      .addTo(map)
-      .bindPopup("Here we have Aquadro")
-      .openPopup();
+  } else {
+    // Dacă titlul paginii nu este "Activities in Piombino", inițializăm o altă hartă
+    const map = initMap([42.92423696772851, 10.531890377151653], 15);
+    addMarker(
+      map,
+      [42.92423696772851, 10.531890377151653],
+      "Here we have Aquadro"
+    );
   }
 });
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting && entry.target.classList.contains("right")) {
-        entry.target.classList.add("show");
-        entry.target.classList.add("slide-from-right");
-      } else if (
-        entry.isIntersecting &&
-        entry.target.classList.contains("left")
-      ) {
-        entry.target.classList.add("show");
-        entry.target.classList.add("slide-from-left");
-      } else if (
-        entry.isIntersecting &&
-        entry.target.classList.contains("fade-in")
-      ) {
-        entry.target.classList.add("show");
-      }
-    });
-  },
-  { root: null }
-); // Observam intregu viewport
+// Funcție pentru a inițializa observerul pentru animații
+const initializeObserver = () => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      // Pentru fiecare element observat
+      entries.forEach((entry) => {
+        // Dacă elementul este vizibil în viewport și are clasa "right"
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
 
-const hiddenElements = document.querySelectorAll(".hidden");
-hiddenElements.forEach((el) => observer.observe(el));
+          if (entry.target.classList.contains("right")) {
+            entry.target.classList.add("slide-from-right");
+          } else if (entry.target.classList.contains("left")) {
+            entry.target.classList.add("slide-from-left");
+          } else if (entry.target.classList.contains("fade-in")) {
+            entry.target.classList.add("show");
+          }
+        }
+      });
+    },
+    { root: null } // Observăm întregul viewport
+  );
 
-//de aici incepe codul pentru calendar
+  // Selectăm toate elementele ascunse și le observăm
+  const hiddenElements = document.querySelectorAll(".hidden");
+  hiddenElements.forEach((el) => observer.observe(el));
+};
+
+initializeObserver(); // Inițializăm observerul
+
+// Cod pentru calendar
 document.addEventListener("DOMContentLoaded", function () {
   const calendar = document.querySelector(".calendar");
   const yearSelect = document.getElementById("year");
@@ -95,35 +106,34 @@ document.addEventListener("DOMContentLoaded", function () {
     "december",
   ];
 
-  async function getData() {
+  // Funcție pentru a obține datele de la server
+  const fetchData = async (url, headers) => {
     try {
-      const res = await fetch(
-        "https://naymuvktteoymrucjwrp.supabase.co/rest/v1/apartament",
-        {
-          headers: {
-            apikey:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5heW11dmt0dGVveW1ydWNqd3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTU1MjUwNTEsImV4cCI6MjAzMTEwMTA1MX0.up4qzCKgbFNqDyd9cPwwb2C8DX60m82A0sOALC3XcxA",
-            authorisation:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5heW11dmt0dGVveW1ydWNqd3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTU1MjUwNTEsImV4cCI6MjAzMTEwMTA1MX0.up4qzCKgbFNqDyd9cPwwb2C8DX60m82A0sOALC3XcxA",
-          },
-        }
-      );
-
-      if (!res.ok) {
-        throw new Error("Failed to fetch data");
-      }
-
+      const res = await fetch(url, { headers });
+      if (!res.ok) throw new Error("Failed to fetch data");
       const data = await res.json();
-      return data.map((item) => ({
-        ...item,
-        free: item.free === true,
-      }));
+      return data.map((item) => ({ ...item, free: item.free === true }));
     } catch (error) {
       console.error("Error fetching data:", error);
+      return [];
     }
-  }
+  };
 
-  async function renderYearOptions() {
+  // Funcție pentru a obține datele necesare
+  const getData = () => {
+    const url = "https://naymuvktteoymrucjwrp.supabase.co/rest/v1/apartament";
+    const headers = {
+      apikey:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5heW11dmt0dGVveW1ydWNqd3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTU1MjUwNTEsImV4cCI6MjAzMTEwMTA1MX0.up4qzCKgbFNqDyd9cPwwb2C8DX60m82A0sOALC3XcxA",
+      authorisation:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5heW11dmt0dGVveW1ydWNqd3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTU1MjUwNTEsImV4cCI6MjAzMTEwMTA1MX0.up4qzCKgbFNqDyd9cPwwb2C8DX60m82A0sOALC3XcxA",
+    };
+
+    return fetchData(url, headers);
+  };
+
+  // Funcție pentru a popula opțiunile pentru ani
+  const populateYearOptions = async () => {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const data = await getData();
@@ -138,12 +148,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     yearSelect.value = currentYear;
-    if (yearSelect.value === "") {
-      yearSelect.value = "";
-    }
-  }
+    if (yearSelect.value === "") yearSelect.value = "";
+  };
 
-  async function renderMonthOptions(year) {
+  // Funcție pentru a popula opțiunile pentru luni
+  const populateMonthOptions = async (year) => {
     const data = await getData();
     const availableMonths = new Set(
       data.filter((item) => item.year == year).map((item) => item.month)
@@ -158,12 +167,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     monthSelect.selectedIndex = new Date().getMonth();
-    if (monthSelect.selectedIndex === -1) {
-      monthSelect.selectedIndex = 0;
-    }
-  }
+    if (monthSelect.selectedIndex === -1) monthSelect.selectedIndex = 0;
+  };
 
-  async function renderCalendar(year, month, apartment) {
+  // Funcție pentru a reda calendarul
+  const renderCalendar = async (year, month, apartment) => {
     calendar.innerHTML = "";
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
@@ -184,40 +192,41 @@ document.addEventListener("DOMContentLoaded", function () {
     const startingDay = new Date(year, month, 1).getDay();
     const offset = startingDay === 0 ? 6 : startingDay - 1;
 
+    const createDayElement = (content, className = "") => {
+      const dayElement = document.createElement("div");
+      dayElement.className = `day ${className}`;
+      dayElement.innerHTML = content;
+      return dayElement;
+    };
+
+    // Adăugăm zilele goale pentru începutul lunii
     for (let i = 0; i < offset; i++) {
-      const blankDay = document.createElement("div");
-      blankDay.classList.add("day", "no-data");
-      blankDay.textContent = "";
-      calendar.appendChild(blankDay);
+      calendar.appendChild(createDayElement("", "no-data"));
     }
 
+    // Adăugăm zilele din lună
     for (let i = 1; i <= daysInMonth; i++) {
-      const dayElement = document.createElement("div");
-      dayElement.classList.add("day");
+      let dayContent = `<div class="row day-of-week">${
+        daysOfWeek[(offset + i - 1) % 7]
+      }</div>
+                        <div class="row">${
+                          monthNames[month].charAt(0).toUpperCase() +
+                          monthNames[month].slice(1)
+                        } ${i}</div>`;
+      let className = "";
 
       if (
         year < currentYear ||
         (year === currentYear && month < currentMonth) ||
         (year === currentYear && month === currentMonth && i < currentDay)
       ) {
-        dayElement.classList.add("no-data");
-        dayElement.innerHTML = `<div class="row day-of-week">${
-          daysOfWeek[(offset + i - 1) % 7]
-        }</div>
-                                <div class="row">${
-                                  monthNames[month].charAt(0).toUpperCase() +
-                                  monthNames[month].slice(1)
-                                } ${i}</div>
-                                <div class="row">No Data</div>`;
+        dayContent += '<div class="row">No Data</div>';
+        className = "no-data";
       } else {
-        const dayOfWeekIndex = new Date(year, month, i).getDay();
-        const dayOfWeek =
-          daysOfWeek[dayOfWeekIndex === 0 ? 6 : dayOfWeekIndex - 1];
-        const monthName = monthNames[month];
         const entry = data.find(
           (item) =>
             item.year == year &&
-            item.month.toLowerCase() === monthName.toLowerCase() &&
+            item.month.toLowerCase() === monthNames[month].toLowerCase() &&
             item.date == i &&
             item.apartment == apartment
         );
@@ -225,60 +234,50 @@ document.addEventListener("DOMContentLoaded", function () {
         if (entry) {
           const availability = entry.free ? "Available" : "Not Available";
           const price = entry.free ? `Price: € ${entry.price}` : "";
-          dayElement.innerHTML = `<div class="row day-of-week">${dayOfWeek}</div>
-                                   <div class="row">${
-                                     monthName.charAt(0).toUpperCase() +
-                                     monthName.slice(1)
-                                   } ${i}</div>
-                                   <div class="row">${availability}</div>
-                                   <div class="row">${price}</div>`;
-          dayElement.classList.add(entry.free ? "free" : "not-free");
+          dayContent += `<div class="row">${availability}</div><div class="row">${price}</div>`;
+          className = entry.free ? "free" : "not-free";
         } else {
-          dayElement.innerHTML = `<div class="row day-of-week">${dayOfWeek}</div>
-                                   <div class="row">${
-                                     monthName.charAt(0).toUpperCase() +
-                                     monthName.slice(1)
-                                   } ${i}</div>
-                                   <div class="row">No Data</div>`;
-          dayElement.classList.add("no-data");
+          dayContent += '<div class="row">No Data</div>';
         }
       }
 
-      calendar.appendChild(dayElement);
+      calendar.appendChild(createDayElement(dayContent, className));
     }
-  }
+  };
 
-  async function initializeCalendar() {
-    await renderYearOptions();
+  // Funcție pentru a inițializa calendarul
+  const initializeCalendar = async () => {
+    await populateYearOptions();
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth();
     yearSelect.value = currentYear.toString();
-    await renderMonthOptions(currentYear);
+    await populateMonthOptions(currentYear);
     monthSelect.value = currentMonth.toString();
     renderCalendar(currentYear, currentMonth, apartmentSelect.value);
-  }
+  };
 
   initializeCalendar();
 
+  // Event listener pentru schimbarea anului
   yearSelect.addEventListener("change", async function () {
     const selectedYear = parseInt(this.value);
-    await renderMonthOptions(selectedYear);
+    await populateMonthOptions(selectedYear);
     const selectedMonth = parseInt(monthSelect.value);
     renderCalendar(selectedYear, selectedMonth, apartmentSelect.value);
   });
 
+  // Event listener pentru schimbarea lunii
   monthSelect.addEventListener("change", function () {
     const selectedYear = parseInt(yearSelect.value);
     const selectedMonth = parseInt(this.value);
     renderCalendar(selectedYear, selectedMonth, apartmentSelect.value);
   });
 
+  // Event listener pentru schimbarea apartamentului
   apartmentSelect.addEventListener("change", function () {
     const selectedYear = parseInt(yearSelect.value);
     const selectedMonth = parseInt(monthSelect.value);
     renderCalendar(selectedYear, selectedMonth, apartmentSelect.value);
   });
 });
-
-//pana aici e codul pentru calendar
