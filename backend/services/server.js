@@ -1,4 +1,4 @@
-"use strict"; // Acest lucru asigură că codul este interpretat în mod strict și aplică reguli suplimentare pentru a evita erorile comune
+"use strict";
 
 // Importăm modulele necesare
 const express = require("express");
@@ -6,17 +6,14 @@ const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
 
-const app = express(); // Inițializăm o aplicație Express
-const port = 5500; // Portul pe care va asculta serverul
+const app = express();
+const port = 5500;
 
-app.use(cors()); // Middleware pentru gestionarea cererilor CORS
+app.use(cors());
 
-// Middleware pentru gestionarea datelor JSON
 app.use(bodyParser.json());
 
-// Endpoint pentru gestionarea trimiterea formularului
 app.post("/sendEmail", (req, res) => {
-  // Extragerea datelor din cererea primită
   const {
     lastname,
     name,
@@ -29,11 +26,10 @@ app.post("/sendEmail", (req, res) => {
     message,
   } = req.body;
 
-  // Compunerea mesajului de e-mail
   const mailOptions = {
-    from: "aurelia.mihoc@demomailtrap.com", // Adresa de la care se trimite e-mailul
-    to: "mihoc.aura@gmail.com", // Adresa la care se trimite e-mailul
-    subject: "Test Email", // Subiectul e-mailului
+    from: "aurelia.mihoc@demomailtrap.com",
+    to: "mihoc.aura@gmail.com",
+    subject: "Test Email",
     html: `
             <p><strong>Last Name:</strong> ${lastname}</p>
             <p><strong>Name:</strong> ${name}</p>
@@ -47,7 +43,6 @@ app.post("/sendEmail", (req, res) => {
         `,
   };
 
-  // Crearea unui transporter pentru trimiterea e-mailului folosind nodemailer
   const transporter = nodemailer.createTransport({
     host: "live.smtp.mailtrap.io",
     port: 587,
@@ -57,19 +52,17 @@ app.post("/sendEmail", (req, res) => {
     },
   });
 
-  // Trimiterea mesajului de e-mail
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.error("Error:", error); // Afișăm eroarea în consolă
-      res.status(500).send("Internal Server Error"); // Răspundem cu o eroare HTTP 500
+      console.error("Error:", error);
+      res.status(500).send("Internal Server Error");
     } else {
-      console.log("Email sent:", info.response); // Afișăm mesajul trimis în consolă
-      res.status(200).send("Email sent successfully"); // Răspundem cu un mesaj de succes HTTP 200
+      console.log("Email sent:", info.response);
+      res.status(200).send("Email sent successfully");
     }
   });
 });
 
-// Pornirea serverului și ascultarea pe portul specificat
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });

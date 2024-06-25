@@ -1,12 +1,12 @@
 "use strict";
 
-// Adăugăm un event listener pentru a inițializa harta la încărcarea paginii
+
 window.addEventListener("load", (event) => {
-  // Funcție pentru inițializarea hărții
+
   const initMap = (coordinates, zoomLevel) => {
     const map = L.map("map").setView(coordinates, zoomLevel);
 
-    // Adăugăm un strat de hărți de la OpenStreetMap
+
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -15,16 +15,16 @@ window.addEventListener("load", (event) => {
     return map;
   };
 
-  // Funcție pentru a adăuga marcatori pe hartă
+
   const addMarker = (map, coordinates, popupText) => {
     L.marker(coordinates).addTo(map).bindPopup(popupText);
   };
 
-  // Inițializăm harta și adăugăm marcatori pe baza titlului paginii
+
   if (event.target.title === "Activities in Piombino") {
     const map = initMap([42.99739, 10.59686], 11);
 
-    // Lista de marcatori cu coordonate și text pentru popup
+
     const markers = [
       {
         coordinates: [42.92423696772851, 10.531890377151653],
@@ -39,12 +39,12 @@ window.addEventListener("load", (event) => {
       { coordinates: [43.03284, 10.71007], text: "Società Agricola Petra" },
     ];
 
-    // Adăugăm fiecare marker pe hartă
+
     markers.forEach((marker) =>
       addMarker(map, marker.coordinates, marker.text)
     );
   } else {
-    // Dacă titlul paginii nu este "Activities in Piombino", inițializăm o altă hartă
+
     const map = initMap([42.92423696772851, 10.531890377151653], 15);
     addMarker(
       map,
@@ -54,13 +54,13 @@ window.addEventListener("load", (event) => {
   }
 });
 
-// Funcție pentru a inițializa observerul pentru animații
+
 const initializeObserver = () => {
   const observer = new IntersectionObserver(
     (entries) => {
-      // Pentru fiecare element observat
+
       entries.forEach((entry) => {
-        // Dacă elementul este vizibil în viewport și are clasa "right"
+
         if (entry.isIntersecting) {
           entry.target.classList.add("show");
 
@@ -74,17 +74,17 @@ const initializeObserver = () => {
         }
       });
     },
-    { root: null } // Observăm întregul viewport
+    { root: null } 
   );
 
-  // Selectăm toate elementele ascunse și le observăm
+
   const hiddenElements = document.querySelectorAll(".hidden");
   hiddenElements.forEach((el) => observer.observe(el));
 };
 
-initializeObserver(); // Inițializăm observerul
+initializeObserver(); 
 
-// Cod pentru calendar
+
 document.addEventListener("DOMContentLoaded", function () {
   const calendar = document.querySelector(".calendar");
   const yearSelect = document.getElementById("year");
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "december",
   ];
 
-  // Funcție pentru a obține datele de la server
+
   const fetchData = async (url, headers) => {
     try {
       const res = await fetch(url, { headers });
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  // Funcție pentru a obține datele necesare
+
   const getData = () => {
     const url = "https://naymuvktteoymrucjwrp.supabase.co/rest/v1/apartament";
     const headers = {
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return fetchData(url, headers);
   };
 
-  // Funcție pentru a popula opțiunile pentru ani
+
   const populateYearOptions = async () => {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (yearSelect.value === "") yearSelect.value = "";
   };
 
-  // Funcție pentru a popula opțiunile pentru luni
+
   const populateMonthOptions = async (year) => {
     const data = await getData();
     const availableMonths = new Set(
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (monthSelect.selectedIndex === -1) monthSelect.selectedIndex = 0;
   };
 
-  // Funcție pentru a reda calendarul
+
   const renderCalendar = async (year, month, apartment) => {
     calendar.innerHTML = "";
     const currentDate = new Date();
@@ -199,12 +199,12 @@ document.addEventListener("DOMContentLoaded", function () {
       return dayElement;
     };
 
-    // Adăugăm zilele goale pentru începutul lunii
+
     for (let i = 0; i < offset; i++) {
       calendar.appendChild(createDayElement("", "no-data"));
     }
 
-    // Adăugăm zilele din lună
+
     for (let i = 1; i <= daysInMonth; i++) {
       let dayContent = `<div class="row day-of-week">${
         daysOfWeek[(offset + i - 1) % 7]
@@ -245,7 +245,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  // Funcție pentru a inițializa calendarul
+
   const initializeCalendar = async () => {
     await populateYearOptions();
     const currentDate = new Date();
@@ -259,7 +259,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   initializeCalendar();
 
-  // Event listener pentru schimbarea anului
+
   yearSelect.addEventListener("change", async function () {
     const selectedYear = parseInt(this.value);
     await populateMonthOptions(selectedYear);
@@ -267,14 +267,14 @@ document.addEventListener("DOMContentLoaded", function () {
     renderCalendar(selectedYear, selectedMonth, apartmentSelect.value);
   });
 
-  // Event listener pentru schimbarea lunii
+
   monthSelect.addEventListener("change", function () {
     const selectedYear = parseInt(yearSelect.value);
     const selectedMonth = parseInt(this.value);
     renderCalendar(selectedYear, selectedMonth, apartmentSelect.value);
   });
 
-  // Event listener pentru schimbarea apartamentului
+
   apartmentSelect.addEventListener("change", function () {
     const selectedYear = parseInt(yearSelect.value);
     const selectedMonth = parseInt(monthSelect.value);
